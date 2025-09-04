@@ -10,14 +10,16 @@ import (
 
 type Claims struct {
 	UserID uint
+	Email string
 	jwt.RegisteredClaims
 }
 
-func GenerateJWT(userID uint) (string, error) {
+func GenerateJWT(userID uint, email string) (string, error) {
 	jwtKey := []byte(os.Getenv("JWT_SECRET")) // ✅ load at runtime
 
 	claims := Claims{
 		UserID: userID,
+		Email: email,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 		},

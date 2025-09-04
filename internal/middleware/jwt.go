@@ -15,7 +15,7 @@ func JWTAuth(next http.Handler) http.Handler {
 			return
 		}
 
-		tokenStr := strings.TrimPrefix(authHeader, "Bearer")
+		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
 		if tokenStr == authHeader {
 			http.Error(w, "Invalid token format", http.StatusUnauthorized)
 			return
@@ -28,6 +28,7 @@ func JWTAuth(next http.Handler) http.Handler {
 		}
 
 		ctx := context.WithValue(r.Context(), "userID", claims.UserID)
+		ctx = context.WithValue(ctx, "email", claims.Email)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

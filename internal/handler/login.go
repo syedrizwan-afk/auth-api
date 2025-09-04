@@ -37,7 +37,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// ✅ Generate JWT
-	token, err := auth.GenerateJWT(user.ID)
+	token, err := auth.GenerateJWT(user.ID, user.Email)
 	if err != nil {
 		http.Error(w, "Error generating token", http.StatusInternalServerError)
 		return
